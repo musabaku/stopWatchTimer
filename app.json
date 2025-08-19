@@ -33,10 +33,18 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "dbc3bb7f-11a1-4a30-82c6-4bab0a8e4af8"
+      }
+    },
+    "owner": "maksini"
   }
 }
