@@ -3,9 +3,15 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
-
+import TimerProvider from './context/TimerProvider';
 export default function RootLayout() {
  
 
-  return ;
+  return (
+    <TimerProvider>
+      <Stack>
+        <Stack.Screen name='(tabs)' options={{headerShown:false}} />
+      </Stack>
+    </TimerProvider>
+  );
 }
