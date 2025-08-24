@@ -1,12 +1,13 @@
 import { Text } from "react-native";
-import { useTimer } from "@/hooks/useTimer";
+import { useContext } from "react";
+import { TimerContext } from "../context/TimerContext";
 export default function HomeScreen() {
-  const {seconds} = useTimer();
+  const seconds = useContext(TimerContext)
   return (
-   <Text>
-    Mak here
-    {seconds}
-   </Text>
+  <>
+  <Text>{seconds}</Text>
+  <Text>Musab</Text>
+  </>
   )
   ;
 }
