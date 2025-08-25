@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import {TimerContext} from "./TimerContext"
 const TimerProvider = ({children}) =>{
     const [seconds,setSeconds] = useState(0);
-    const [isRunning,setisRunning] = useState(false);
+    const [isRunning,setisRunning] = useState(true);
 
     function time(sec){
-        let hour = sec/3600;
-        let min = hour/60;
-        let s = min%60;
-
+        let hour = Math.floor(sec/3600);
+        let min = Math.floor((sec%3600)/60);
+        let s = sec%60;
+        const obj = {hour,min,s}
+        return obj
     }
     function startTimer(){
         setisRunning(true)
@@ -29,8 +30,15 @@ const TimerProvider = ({children}) =>{
       return ()=>clearInterval(intervalId)
         }
     },[isRunning])
+    const obj ={
+        seconds,
+        isRunning,
+        startTimer,
+        stopTimer,
+        resetTimer
+    }
     return(
-        <TimerContext.Provider value={seconds}>
+        <TimerContext.Provider value={obj}>
             {children}
         </TimerContext.Provider>
     )
