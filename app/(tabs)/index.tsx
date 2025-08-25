@@ -1,13 +1,18 @@
 import { Text } from "react-native";
 import { useContext } from "react";
-import { TimerContext } from "../context/TimerContext";
+import { Button } from "react-native";
+import { TimerContext } from "@/context/TimerContext";
 export default function HomeScreen() {
-  // const se = useContext(TimerContext)
-  // // const {seconds,isRunning,startTimer,stopTimer,resetTimer} = useContext(TimerContext)
+  const {seconds,isRunning,startTimer,stopTimer,resetTimer,formatTime} = useContext(TimerContext)
   // console.log(se)
+  const formatted = formatTime(seconds)
+
   return (
   <>
-  <Text>Musab</Text>
+  {isRunning?(<Button title="Stop" onPress={stopTimer}/>):(<Button title="Start" onPress={startTimer}/>)}
+
+  <Button title="Reset" onPress={resetTimer}/>
+  <Text><Text>{formatted.hour}:{formatted.minute}:{formatted.second}</Text></Text>
   </>
   )
   

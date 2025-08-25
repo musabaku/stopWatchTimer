@@ -5,8 +5,13 @@ type TimerContextType ={
     startTimer : ()=>void;
     stopTimer : ()=>void;
     resetTimer : ()=>void;
+    formatTime : (sec:number)=>TimeObject;
 
-
+}
+type TimeObject = {
+    hour:number;
+    minute:number;
+    second:number
 }
 const defaultValue = {
     seconds:0,
@@ -14,5 +19,6 @@ const defaultValue = {
     startTimer:()=>{},
     stopTimer:()=>{},
     resetTimer:()=>{},
+    formatTime:()=>({hour:0,minute:0,second:0}),
 }
 export const TimerContext = createContext<TimerContextType>(defaultValue)

@@ -4,11 +4,11 @@ const TimerProvider = ({children}) =>{
     const [seconds,setSeconds] = useState(0);
     const [isRunning,setisRunning] = useState(true);
 
-    function time(sec){
+    function formatTime(sec){
         let hour = Math.floor(sec/3600);
-        let min = Math.floor((sec%3600)/60);
-        let s = sec%60;
-        const obj = {hour,min,s}
+        let minute = Math.floor((sec%3600)/60);
+        let second = sec%60;
+        const obj = {hour,minute,second}
         return obj
     }
     function startTimer(){
@@ -35,7 +35,8 @@ const TimerProvider = ({children}) =>{
         isRunning,
         startTimer,
         stopTimer,
-        resetTimer
+        resetTimer,
+        formatTime,
     }
     return(
         <TimerContext.Provider value={obj}>
