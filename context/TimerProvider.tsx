@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {TimerContext} from "./TimerContext"
+import { addSession } from "@/database";
+
 const TimerProvider = ({children}) =>{
     const [seconds,setSeconds] = useState(0);
     const [isRunning,setisRunning] = useState(true);
+    const [tag,setTag] = useState("");
+    const [tagActive,settagActive] = useState(false);
 
     function formatTime(sec){
         let hour = Math.floor(sec/3600);
@@ -12,10 +16,25 @@ const TimerProvider = ({children}) =>{
         return obj
     }
     function startTimer(){
-        setisRunning(true)
+        settagActive(true)
+    }
+    function confirmTagAndStart(){
+        if(tag.trim()!==''){
+         setisRunning(true)
+         settagActive(false)
+        }
     }
     function stopTimer(){
         setisRunning(false)
+        const insert_session = `
+        INSERT INTO sessions(tag,duration,end_time)
+        VALUES (?,?,?)
+        `
+        const endTime = new Date().toISOString()
+        const params=[tag,seconds,endTime]
+        addSession(insert_session,params)
+        setTag('')
+        setSeconds(0)
     }
     function resetTimer(){
         setisRunning(false)
@@ -29,7 +48,11 @@ const TimerProvider = ({children}) =>{
       const intervalId =  setInterval(timer,1000);
       return ()=>clearInterval(intervalId)
         }
-    },[isRunning])
+        // if(tagActive){
+        //     const userTag = userinput;
+        //     setTag(userTag)
+        // }
+    },[isRunning,tagActive])
     const obj ={
         seconds,
         isRunning,
@@ -37,6 +60,10 @@ const TimerProvider = ({children}) =>{
         stopTimer,
         resetTimer,
         formatTime,
+        tag,
+        setTag,
+        confirmTagAndStart,
+        tagActive,
     }
     return(
         <TimerContext.Provider value={obj}>

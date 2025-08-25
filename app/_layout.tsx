@@ -4,9 +4,13 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import TimerProvider from '../context/TimerProvider';
+import { inititalizeDatabase } from '@/database';
+import { useEffect } from 'react';
 export default function RootLayout() {
- 
+ useEffect(()=>{
+inititalizeDatabase()
 
+ },[])
   return (
     <TimerProvider>
       <Stack>
