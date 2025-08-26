@@ -1,22 +1,39 @@
-import * as SQLite from 'expo-sqlite'
-const db = SQLite.openDatabaseSync('session.db')
+import * as SQLite from 'expo-sqlite';
 
-const create_database_table =
-`
-CREATE TABLE IF NOT EXISTS sessions(
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-tag TEXT NOT NULL,
-duration INTEGER NOT NULL,
-end_time TEXT NOT NULL
-);
-`;
+let db: SQLite.SQLiteDatabase | null = null;
 
-export async function inititalizeDatabase(){
-await db.execAsync(create_database_table)
-return db
+// This function gets the connection, opening it only if it's not already open.
+function getDbConnection() {
+  if (db === null) {
+    db = SQLite.openDatabaseSync('sessions.db');
+  }
+  return db;
 }
+export const initializeDatabase = () => {
+    const db = getDbConnection();
 
-export async function addSession(insert_session,params){
-await db.runAsync(insert_session,params)
-return db
-}
+  // execSync is correct here because there are no parameters.
+  db.execSync(
+    `CREATE TABLE IF NOT EXISTS sessions(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      tag TEXT NOT NULL,
+      duration INTEGER NOT NULL,
+      end_time TEXT NOT NULL
+    );`
+  );
+};
+
+// Use runSync for INSERT statements with parameters.
+export const addSession = (tag: string, duration: number) => {
+  const endTime = new Date().toISOString();
+  db.runSync(
+    'INSERT INTO sessions (tag, duration, end_time) VALUES (?, ?, ?)',
+    [tag, duration, endTime]
+  );
+};
+
+// Use getAllSync for SELECT statements to get all rows.
+export const getAllSessions = (): any[] => {
+  // This function returns the array of rows directly.
+  return db.getAllSync('SELECT * FROM sessions ORDER BY end_time DESC');
+};

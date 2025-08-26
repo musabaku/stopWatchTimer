@@ -26,13 +26,7 @@ const TimerProvider = ({children}) =>{
     }
     function stopTimer(){
         setisRunning(false)
-        const insert_session = `
-        INSERT INTO sessions(tag,duration,end_time)
-        VALUES (?,?,?)
-        `
-        const endTime = new Date().toISOString()
-        const params=[tag,seconds,endTime]
-        addSession(insert_session,params)
+        addSession(tag,seconds)
         setTag('')
         setSeconds(0)
     }
