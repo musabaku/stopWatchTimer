@@ -5,7 +5,7 @@ type TimerContextType ={
     startTimer : ()=>void;
     stopTimer : ()=>void;
     resetTimer : ()=>void;
-    formatTime : (sec:number)=>TimeObject;
+    // formatTime : (sec:number)=>TimeObject;
     tag : string;
     setTag : (tag:string)=>void;
     confirmTagAndStart:()=>void;
@@ -22,7 +22,7 @@ const defaultValue = {
     startTimer:()=>{},
     stopTimer:()=>{},
     resetTimer:()=>{},
-    formatTime:()=>({hour:0,minute:0,second:0}),
+    // formatTime:()=>({hour:0,minute:0,second:0}),
     tag:"",
     setTag:()=>{},
     confirmTagAndStart:()=>{},

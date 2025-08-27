@@ -8,13 +8,7 @@ const TimerProvider = ({children}) =>{
     const [tag,setTag] = useState("");
     const [tagActive,settagActive] = useState(false);
 
-    function formatTime(sec){
-        let hour = Math.floor(sec/3600);
-        let minute = Math.floor((sec%3600)/60);
-        let second = sec%60;
-        const obj = {hour,minute,second}
-        return obj
-    }
+
     function startTimer(){
         settagActive(true)
     }
@@ -53,7 +47,6 @@ const TimerProvider = ({children}) =>{
         startTimer,
         stopTimer,
         resetTimer,
-        formatTime,
         tag,
         setTag,
         confirmTagAndStart,

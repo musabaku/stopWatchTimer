@@ -2,8 +2,9 @@ import { Modal, Text, TextInput, View } from "react-native";
 import { useContext } from "react";
 import { Button } from "react-native";
 import { TimerContext } from "@/context/TimerContext";
+import formatTime from "@/utils/formatTime"
 export default function HomeScreen() {
-  const {seconds,isRunning,startTimer,stopTimer,resetTimer,formatTime,tag,setTag,confirmTagAndStart,tagActive} = useContext(TimerContext)
+  const {seconds,isRunning,startTimer,stopTimer,resetTimer,tag,setTag,confirmTagAndStart,tagActive} = useContext(TimerContext)
   // console.log(se)
   const formatted = formatTime(seconds)
 
@@ -16,7 +17,7 @@ export default function HomeScreen() {
       <Button title="Confirm & Start" onPress={confirmTagAndStart}/>
     </Modal>
   <Button title="Reset" onPress={resetTimer}/>
-  <Text>{formatted.hour}:{formatted.minute}:{formatted.second}</Text>
+  <Text>{formatted}</Text>
   <Text>{tag}</Text>
   </View>
   
