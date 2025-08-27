@@ -1,3 +1,4 @@
+// database/index.ts - FINAL CORRECT VERSION
 import * as SQLite from 'expo-sqlite';
 
 let db: SQLite.SQLiteDatabase | null = null;
@@ -9,10 +10,10 @@ function getDbConnection() {
   }
   return db;
 }
-export const initializeDatabase = () => {
-    const db = getDbConnection();
 
-  // execSync is correct here because there are no parameters.
+// Initialization now uses the on-demand connection
+export const initializeDatabase = () => {
+  const db = getDbConnection();
   db.execSync(
     `CREATE TABLE IF NOT EXISTS sessions(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,8 +24,9 @@ export const initializeDatabase = () => {
   );
 };
 
-// Use runSync for INSERT statements with parameters.
+// Inserting data uses the on-demand connection
 export const addSession = (tag: string, duration: number) => {
+  const db = getDbConnection();
   const endTime = new Date().toISOString();
   db.runSync(
     'INSERT INTO sessions (tag, duration, end_time) VALUES (?, ?, ?)',
@@ -32,8 +34,8 @@ export const addSession = (tag: string, duration: number) => {
   );
 };
 
-// Use getAllSync for SELECT statements to get all rows.
+// Fetching data uses the on-demand connection
 export const getAllSessions = (): any[] => {
-  // This function returns the array of rows directly.
+  const db = getDbConnection();
   return db.getAllSync('SELECT * FROM sessions ORDER BY end_time DESC');
 };

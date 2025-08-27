@@ -1,6 +1,7 @@
 import { getAllSessions } from '@/database';
 import formatTime from '@/utils/formatTime';
-import { useEffect, useState } from 'react';
+import { useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useState } from 'react';
 import { FlatList, View,Text ,StyleSheet} from 'react-native';
 
 export default function History() {
@@ -12,6 +13,27 @@ export default function History() {
     }
     loadData()
   },[])
+  useFocusEffect(
+    useCallback(() => {
+      async function loadData() {
+        const data = await getAllSessions();
+        setSession(data);
+      }
+      loadData();
+    }, [])
+  );
+  // console.log({session})
+
+//   const summary(){
+//   const tagDuration = {}
+//   session.forEach(s=>{
+//   const {tag,duration} = s
+//     if (tagDuration[tag]){
+
+//     }
+//   }
+//   )
+// }
   return (
     <>
     <FlatList 
@@ -43,3 +65,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
