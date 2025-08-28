@@ -14,8 +14,7 @@ function getDbConnection() {
 // Initialization now uses the on-demand connection
 export const initializeDatabase = () => {
   const db = getDbConnection();
-  db.execAsync(`ALTER TABLE sessions ADD COLUMN selectedCategory TEXT NOT NULL DEFAULT ''`)
-  db.execAsync(`ALTER TABLE sessions ADD COLUMN description TEXT NOT NULL DEFAULT ''`)
+
   db.execSync(
     `CREATE TABLE IF NOT EXISTS sessions(
       id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -19,16 +19,17 @@ export default function History() {
   // console.log({session})
 
   const summary=useMemo(()=>{
-  const tagDuration = {}
+  const tagDuration: { [key: string]: number } = {};
   session.forEach(s=>{
-  const {tag,duration} = s
-    if (tagDuration[tag]){
-      tagDuration[tag]+=duration;
+  const {selectedCategory,duration} = s
+    if (tagDuration[selectedCategory]){
+      tagDuration[selectedCategory]+=duration;
     }
     else{
-      tagDuration[tag] = duration
+      tagDuration[selectedCategory] = duration
     }
   })
+  return tagDuration
    },[session])
 
   return (
@@ -38,8 +39,10 @@ export default function History() {
     keyExtractor={(item)=>item.id.toString()}
     renderItem={({item})=>(
       <View>
-        <Text>Tag: {item.tag}</Text>
+        <Text>Category: {item.selectedCategory}</Text>
+        <Text>Description: {item.description}</Text>
         <Text>Duration: {formatTime(item.duration)}</Text>
+        <Text>***********</Text>
       </View>
     ) }
 

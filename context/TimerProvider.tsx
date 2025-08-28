@@ -43,6 +43,8 @@ const category1 = [
     }
     function resetTimer(){
         setisRunning(false)
+        setDescription('****\nNone, To Start Timer Press Start')
+        setSelectedCategory('****\nNone')
         setSeconds(0)
     }
     function timer(){
@@ -57,7 +59,7 @@ const category1 = [
         //     const userTag = userinput;
         //     setTag(userTag)
         // }
-    },[isRunning,descriptionActive])
+    },[isRunning])
     const obj ={
         seconds,
         isRunning,
