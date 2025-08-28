@@ -6,7 +6,7 @@ type TimerContextType ={
     stopTimer : ()=>void;
     resetTimer : ()=>void;
     // formatTime : (sec:number)=>TimeObject;
-    tag : string;
+    desc : string;
     setTag : (tag:string)=>void;
     confirmTagAndStart:()=>void;
     tagActive: boolean;

@@ -3,25 +3,41 @@ import {TimerContext} from "./TimerContext"
 import { addSession } from "@/database";
 
 const TimerProvider = ({children}) =>{
+
+const category1 = [
+  "Protected",
+  "At Risk",
+  "Support",
+  "Fixed",
+  "Out",
+  "Rest",
+  "Curiosity",
+  "Pleasure",
+  "Emotional",
+  "Undefined"
+];
+
+
+
     const [seconds,setSeconds] = useState(0);
     const [isRunning,setisRunning] = useState(true);
-    const [tag,setTag] = useState("");
-    const [tagActive,settagActive] = useState(false);
-
+    const [category,setCategory] = useState(category1);
+    const [description,setDescription] = useState("");
+    const [descriptionActive,setdescriptionActive] = useState(false);
 
     function startTimer(){
-        settagActive(true)
+        setdescriptionActive(true)
     }
     function confirmTagAndStart(){
-        if(tag.trim()!==''){
+        if(description.trim()!==''){
          setisRunning(true)
-         settagActive(false)
+         setdescriptionActive(false)
         }
     }
     function stopTimer(){
         setisRunning(false)
-        addSession(tag,seconds)
-        setTag('')
+        addSession(category,description,seconds)
+        setDescription('')
         setSeconds(0)
     }
     function resetTimer(){
@@ -40,17 +56,19 @@ const TimerProvider = ({children}) =>{
         //     const userTag = userinput;
         //     setTag(userTag)
         // }
-    },[isRunning,tagActive])
+    },[isRunning,setdescriptionActive])
     const obj ={
         seconds,
         isRunning,
         startTimer,
         stopTimer,
         resetTimer,
-        tag,
-        setTag,
+        category,
+        setCategory,
+        description,
+        setDescription,
         confirmTagAndStart,
-        tagActive,
+        descriptionActive,
     }
     return(
         <TimerContext.Provider value={obj}>
