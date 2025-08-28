@@ -6,10 +6,13 @@ type TimerContextType ={
     stopTimer : ()=>void;
     resetTimer : ()=>void;
     // formatTime : (sec:number)=>TimeObject;
-    desc : string;
-    setTag : (tag:string)=>void;
+    categories: string[];
+    selectedCategory: string;
+    setSelectedCategory:(cat:string)=>void;
+    description : string;
+    setDescription:(desc:string)=>void;
     confirmTagAndStart:()=>void;
-    tagActive: boolean;
+    descriptionActive: boolean;
 }
 type TimeObject = {
     hour:number;
@@ -23,9 +26,12 @@ const defaultValue = {
     stopTimer:()=>{},
     resetTimer:()=>{},
     // formatTime:()=>({hour:0,minute:0,second:0}),
-    tag:"",
-    setTag:()=>{},
+    selectedCategory:"",
+    setSelectedCategory:()=>{},
+    categories:[],
+    description:"",
+    setDescription:()=>{},
     confirmTagAndStart:()=>{},
-    tagActive:false
+    descriptionActive:false
 }
 export const TimerContext = createContext<TimerContextType>(defaultValue)

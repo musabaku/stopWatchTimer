@@ -21,7 +21,8 @@ const category1 = [
 
     const [seconds,setSeconds] = useState(0);
     const [isRunning,setisRunning] = useState(true);
-    const [category,setCategory] = useState(category1);
+    const [categories,setCategory] = useState(category1);
+    const [selectedCategory,setSelectedCategory] = useState("");
     const [description,setDescription] = useState("");
     const [descriptionActive,setdescriptionActive] = useState(false);
 
@@ -36,7 +37,7 @@ const category1 = [
     }
     function stopTimer(){
         setisRunning(false)
-        addSession(category,description,seconds)
+        addSession(selectedCategory,description,seconds)
         setDescription('')
         setSeconds(0)
     }
@@ -56,15 +57,16 @@ const category1 = [
         //     const userTag = userinput;
         //     setTag(userTag)
         // }
-    },[isRunning,setdescriptionActive])
+    },[isRunning,descriptionActive])
     const obj ={
         seconds,
         isRunning,
         startTimer,
         stopTimer,
         resetTimer,
-        category,
-        setCategory,
+        categories,
+        selectedCategory,
+        setSelectedCategory,
         description,
         setDescription,
         confirmTagAndStart,

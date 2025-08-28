@@ -14,10 +14,12 @@ function getDbConnection() {
 // Initialization now uses the on-demand connection
 export const initializeDatabase = () => {
   const db = getDbConnection();
+  db.execAsync(`ALTER TABLE sessions ADD COLUMN selectedCategory TEXT NOT NULL DEFAULT ''`)
+  db.execAsync(`ALTER TABLE sessions ADD COLUMN description TEXT NOT NULL DEFAULT ''`)
   db.execSync(
     `CREATE TABLE IF NOT EXISTS sessions(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      category TEXT NOT NULL,
+      selectedCategory TEXT NOT NULL,
       description TEXT,
       duration INTEGER NOT NULL,
       end_time TEXT NOT NULL
@@ -26,12 +28,12 @@ export const initializeDatabase = () => {
 };
 
 // Inserting data uses the on-demand connection
-export const addSession = (category: string,description: string, duration: number) => {
+export const addSession = (selectedCategory: string,description: string, duration: number) => {
   const db = getDbConnection();
   const endTime = new Date().toISOString();
   db.runSync(
-    'INSERT INTO sessions (category,description, duration, end_time) VALUES (?,?, ?, ?)',
-    [category,description, duration, endTime]
+    'INSERT INTO sessions (selectedCategory,description, duration, end_time) VALUES (?,?, ?, ?)',
+    [selectedCategory,description, duration, endTime]
   );
 };
 
