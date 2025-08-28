@@ -44,7 +44,7 @@ export default function HomeScreen() {
 
     <TextInput onChangeText ={setDescription} value={description}/>
       <Button title="Confirm & Start" onPress={confirmTagAndStart}/>
-      <Button title="Confirnm & Start" onPress={confirmTagAndStart}/>
+
               </View>
 
     </Modal>

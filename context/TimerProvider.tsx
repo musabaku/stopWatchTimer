@@ -20,7 +20,7 @@ const category1 = [
 
 
     const [seconds,setSeconds] = useState(0);
-    const [isRunning,setisRunning] = useState(true);
+    const [isRunning,setisRunning] = useState(false);
     const [categories,setCategory] = useState(category1);
     const [selectedCategory,setSelectedCategory] = useState("");
     const [description,setDescription] = useState("");
@@ -30,21 +30,25 @@ const category1 = [
         setdescriptionActive(true)
     }
     function confirmTagAndStart(){
-        if(description.trim()!==''){
+        if(selectedCategory.trim()!==''){
          setisRunning(true)
          setdescriptionActive(false)
+        }
+        else{
+            alert('Please select a category')
         }
     }
     function stopTimer(){
         setisRunning(false)
         addSession(selectedCategory,description,seconds)
         setDescription('')
+        setSelectedCategory('')
         setSeconds(0)
     }
     function resetTimer(){
         setisRunning(false)
-        setDescription('****\nNone, To Start Timer Press Start')
-        setSelectedCategory('****\nNone')
+        setDescription('')
+        setSelectedCategory('')
         setSeconds(0)
     }
     function timer(){
