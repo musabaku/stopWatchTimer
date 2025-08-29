@@ -1,4 +1,4 @@
-import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Modal, ScrollView, Text, TextInput, TouchableOpacity, View,StyleSheet } from "react-native";
 import { useContext } from "react";
 import { Button } from "react-native";
 import { TimerContext } from "@/context/TimerContext";
@@ -9,9 +9,26 @@ export default function HomeScreen() {
   const formatted = formatTime(seconds)
 
   return (
-  <View>
+  <View style={styles.container}>
+<View style={styles.buttonContainer}>
 
-  {isRunning?(<Button title="Stop" onPress={stopTimer}/>):(<Button title="Start" onPress={startTimer}/>)}
+  {isRunning?(
+    <TouchableOpacity
+    onPress={stopTimer}
+    style={styles.button}>
+      <Text style={styles.buttonText}>Stop</Text>
+    </TouchableOpacity>
+  )
+    :(
+     <TouchableOpacity
+    onPress={startTimer}
+    style={styles.button}
+    >
+      <Text style={styles.buttonText}>Start</Text>
+    </TouchableOpacity>
+    )}
+</View>
+
     <Modal visible={descriptionActive}>
               <View style={{ flex: 3, padding: 16 }}>
 
@@ -43,13 +60,23 @@ export default function HomeScreen() {
       </ScrollView>
 
     <TextInput onChangeText ={setDescription} value={description}/>
-      <Button title="Confirm & Start" onPress={confirmTagAndStart}/>
-
+     
+ <TouchableOpacity
+    onPress={confirmTagAndStart}
+    style={styles.button}
+    >
+      <Text style={styles.buttonText}>Confirm & Start</Text>
+    </TouchableOpacity>
               </View>
 
     </Modal>
-  <Button title="Reset" onPress={resetTimer}/>
-  <Text>{formatted}</Text>
+     <TouchableOpacity
+    onPress={resetTimer}
+    style={styles.button}
+    >
+      <Text style={styles.buttonText}>Reset</Text>
+    </TouchableOpacity>
+  <Text style={styles.timerText}>{formatted}</Text>
   <Text>selectedCategory</Text>
   <Text>{selectedCategory}</Text>
   <Text>description</Text>
@@ -60,3 +87,32 @@ export default function HomeScreen() {
   
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center', // Vertically center items
+    alignItems: 'center',    // Horizontally center items
+    backgroundColor: '#fff',
+  },
+  timerText: {
+  fontSize: 72,
+  fontWeight: '200', // A thinner, modern font weight
+  marginBottom: 40,
+},
+buttonContainer: {
+  flexDirection: 'row',
+  gap: 20,
+},
+button: {
+  backgroundColor: '#007AFF',
+  paddingVertical: 12,
+  paddingHorizontal: 30,
+  borderRadius: 25,
+},
+buttonText: {
+  color: 'white',
+  fontSize: 18,
+  fontWeight: '600',
+},
+
+});
