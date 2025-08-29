@@ -5,17 +5,18 @@ import { addSession } from "@/database";
 const TimerProvider = ({children}) =>{
 
 const category1 = [
-  "Protected",
-  "At Risk",
-  "Support",
-  "Fixed",
-  "Out",
-  "Rest",
-  "Curiosity",
-  "Pleasure",
-  "Emotional",
-  "Undefined"
+  "🛡️ Protected",
+  "⚠️ At Risk",
+  "🛠️ Support",
+  "📌 Fixed",
+  "🚪 Out",
+  "😴 Rest",
+  "🔍 Curiosity",
+  "🎉 Pleasure",
+  "🌊 Sanity",
+  "🌀 Insanity"
 ];
+
 
 
 

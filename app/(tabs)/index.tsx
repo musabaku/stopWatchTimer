@@ -52,39 +52,51 @@ export default function HomeScreen() {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-          <ScrollView horizontal style={{ height: 1 }}>
-            {categories.map((cat, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => setSelectedCategory(cat)}
-                style={[
+            <View style={styles.categoriesContainer}>
+              {categories.map((cat, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => setSelectedCategory(cat)}
+                  style={[
                     styles.categoryButton,
-                    { backgroundColor: selectedCategory === cat ? '#007AFF' : '#EFEFF4' }
+                    {
+                      backgroundColor:
+                        selectedCategory === cat ? "#007AFF" : "#EFEFF4",
+                    },
                   ]}
-              >
-                <Text
-                  style={{
-                    color: selectedCategory === cat ? "white" : "black",
-                    fontWeight: "bold",
-                  }}
                 >
-                  {cat}
+                  <Text
+                    style={{
+                      color: selectedCategory === cat ? "white" : "black",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    console.log({cat})
+                    {cat}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+
+            <TextInput onChangeText={setDescription} value={description} />
+
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity
+                style={[styles.button, styles.cancelButton]}
+                onPress={cancelStart}
+              >
+                <Text style={[styles.buttonText, { color: "#007AFF" }]}>
+                  Cancel
                 </Text>
               </TouchableOpacity>
-            ))}
-          </ScrollView>
-
-          <TextInput onChangeText={setDescription} value={description} />
-
-         <View style={styles.modalButtonContainer}>
-              <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={cancelStart}>
-                <Text style={[styles.buttonText, {color: '#007AFF'}]}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={[styles.button, styles.startButton]} onPress={confirmTagAndStart}>
+              <TouchableOpacity
+                style={[styles.button, styles.startButton]}
+                onPress={confirmTagAndStart}
+              >
                 <Text style={styles.buttonText}>Confirm & Start</Text>
               </TouchableOpacity>
             </View>
-        </View>
+          </View>
         </View>
       </Modal>
       <TouchableOpacity onPress={resetTimer} style={styles.button}>
@@ -105,6 +117,13 @@ const styles = StyleSheet.create({
     justifyContent: "center", // Vertically center items
     alignItems: "center", // Horizontally center items
     backgroundColor: "#fff",
+  },
+  categoriesContainer: {
+    flexDirection: "row", // Arrange items horizontally
+    flexWrap: "wrap", // Allow items to wrap
+    justifyContent: "center", // Center the items
+    marginBottom: 16,
+    padding:10
   },
   timerText: {
     fontSize: 72,
@@ -127,16 +146,16 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   startButton: {
-    backgroundColor: '#34C759',
+    backgroundColor: "#34C759",
   },
   stopButton: {
-    backgroundColor: '#FF3B30',
+    backgroundColor: "#FF3B30",
   },
   resetButton: {
-    backgroundColor: '#EFEFF4',
+    backgroundColor: "#EFEFF4",
   },
   resetButtonText: {
-    color: '#333',
+    color: "#333",
   },
   modalContainer: {
     flex: 1,
@@ -153,9 +172,9 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
-    textAlign: 'center',
+    textAlign: "center",
   },
   categoryButton: {
     paddingVertical: 8,
@@ -165,7 +184,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 44,
-    borderColor: '#EFEFF4',
+    borderColor: "#EFEFF4",
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 10,
@@ -173,11 +192,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   modalButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding:10
   },
   cancelButton: {
-    backgroundColor: '#EFEFF4',
-  }
-
+    backgroundColor: "#EFEFF4",
+    padding:10
+    
+  },
 });
