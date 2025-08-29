@@ -14,7 +14,7 @@ function getDbConnection() {
 // Initialization now uses the on-demand connection
 export const initializeDatabase = () => {
   const db = getDbConnection();
-
+// db.execSync('DROP TABLE IF EXISTS sessions;'); 
   db.execSync(
     `CREATE TABLE IF NOT EXISTS sessions(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,3 +41,8 @@ export const getAllSessions = (): any[] => {
   const db = getDbConnection();
   return db.getAllSync('SELECT * FROM sessions ORDER BY end_time DESC');
 };
+
+export const deleteSession = (id:number)=>{
+const db = getDbConnection();
+db.runSync('DELETE FROM sessions WHERE id = ?',[id])
+}

@@ -1,8 +1,8 @@
-import { getAllSessions } from "@/database";
+import { deleteSession, getAllSessions } from "@/database";
 import formatTime from "@/utils/formatTime";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { FlatList, View, Text, StyleSheet } from "react-native";
+import { FlatList, View, Text, StyleSheet, TouchableOpacity ,Button} from "react-native";
 
 export default function History() {
   const [session, setSession] = useState([]);
@@ -31,22 +31,55 @@ export default function History() {
     return tagDuration;
   }, [session]);
 
+  const handleDelete=(id:number)=>{
+    deleteSession(id);
+    setSession((s)=>
+    s.filter((s1)=>s1.id!==id))
+  }
   return (
     <>
-      {Object.entries(summary).map(([key, value], index) => (
-        <Text key={index}>
-          {key}: {formatTime(value)}
-        </Text>
-      ))}
-      <FlatList
+    <FlatList
         data={session}
         keyExtractor={(item) => item.id.toString()}
+        ListHeaderComponent={
+          <View>
+            <Text>Summary By Category</Text>
+            <Text>*************</Text>
+        {Object.entries(summary).map(([key, value], index) => (
+          <Text key={index}>
+            {key}: {formatTime(value)}
+          </Text>
+        ))} 
+            <Text>*************</Text>
+         <Text>Sessions Info</Text>
+            <Text>*************</Text>
+        </View>
+        
+        }
+
         renderItem={({ item }) => (
           <View>
+            <View>
+
             <Text>Category: {item.selectedCategory}</Text>
             <Text>Description: {item.description}</Text>
             <Text>Duration: {formatTime(item.duration)}</Text>
-            <Text>***********</Text>
+            </View>
+          <TouchableOpacity
+          onPress={()=>handleDelete(item.id)}
+            style={{
+                  paddingVertical: 8,
+                  paddingHorizontal: 16,
+                  marginRight: 8,
+                  maxHeight:50,
+                  borderRadius: 20,
+                  backgroundColor: "#007AFF",
+                }}
+          >
+
+            <Text>Delete</Text>
+          </TouchableOpacity>
+            <Text>--</Text>
           </View>
         )}
       />
