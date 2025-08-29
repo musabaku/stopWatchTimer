@@ -12,6 +12,7 @@ type TimerContextType ={
     description : string;
     setDescription:(desc:string)=>void;
     confirmTagAndStart:()=>void;
+    cancelStart:()=>void;
     descriptionActive: boolean;
 }
 type TimeObject = {
@@ -32,6 +33,7 @@ const defaultValue = {
     description:"",
     setDescription:()=>{},
     confirmTagAndStart:()=>{},
+    cancelStart:()=>{},
     descriptionActive:false
 }
 export const TimerContext = createContext<TimerContextType>(defaultValue)

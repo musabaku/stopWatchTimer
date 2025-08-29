@@ -29,6 +29,9 @@ const category1 = [
     function startTimer(){
         setdescriptionActive(true)
     }
+    function cancelStart(){
+        setdescriptionActive(false)
+    }
     function confirmTagAndStart(){
         if(selectedCategory.trim()!==''){
          setisRunning(true)
@@ -77,6 +80,7 @@ const category1 = [
         setDescription,
         confirmTagAndStart,
         descriptionActive,
+        cancelStart
     }
     return(
         <TimerContext.Provider value={obj}>
