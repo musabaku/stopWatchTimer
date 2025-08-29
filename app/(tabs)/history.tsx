@@ -3,7 +3,7 @@ import formatTime from "@/utils/formatTime";
 import { useFocusEffect } from "expo-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FlatList, View, Text, StyleSheet, TouchableOpacity ,Button} from "react-native";
-
+import { AppColors } from "@/constants/Colors";
 export default function History() {
   const [session, setSession] = useState([]);
 
@@ -36,68 +36,118 @@ export default function History() {
     setSession((s)=>
     s.filter((s1)=>s1.id!==id))
   }
-  return (
-    <>
-    <FlatList
+return (
+    <View style={styles.container}>
+      <FlatList
         data={session}
         keyExtractor={(item) => item.id.toString()}
         ListHeaderComponent={
-          <View>
-            <Text>Summary By Category</Text>
-            <Text>*************</Text>
-        {Object.entries(summary).map(([key, value], index) => (
-          <Text key={index}>
-            {key}: {formatTime(value)}
-          </Text>
-        ))} 
-            <Text>*************</Text>
-         <Text>Sessions Info</Text>
-            <Text>*************</Text>
-        </View>
-        
+          <View style={styles.summaryContainer}>
+            <Text style={styles.summaryTitle}>Summary by Category</Text>
+            {Object.entries(summary).map(([category, duration]) => (
+              <View key={category} style={styles.summaryItem}>
+                <Text style={styles.summaryCategory}>{category}:</Text>
+                <Text style={styles.summaryDuration}>{formatTime(duration)}</Text>
+              </View>
+            ))}
+          </View>
         }
-
         renderItem={({ item }) => (
-          <View>
-            <View>
-
-            <Text>Category: {item.selectedCategory}</Text>
-            <Text>Description: {item.description}</Text>
-            <Text>Duration: {formatTime(item.duration)}</Text>
+          <View style={styles.itemContainer}>
+            <View style={styles.itemDetails}>
+       
+              <Text style={styles.itemCategory}>{item.selectedCategory}</Text>
+              {item.description ? (
+                <Text style={styles.itemDescription}>{item.description}</Text>
+              ) : null}
+              <Text style={styles.itemDuration}>{formatTime(item.duration)}</Text>
             </View>
-          <TouchableOpacity
-          onPress={()=>handleDelete(item.id)}
-            style={{
-                  paddingVertical: 8,
-                  paddingHorizontal: 16,
-                  marginRight: 8,
-                  maxHeight:50,
-                  borderRadius: 20,
-                  backgroundColor: "#007AFF",
-                }}
-          >
 
-            <Text>Delete</Text>
-          </TouchableOpacity>
-            <Text>--</Text>
+            <TouchableOpacity onPress={() => handleDelete(item.id)} style={[styles.button, styles.stopButton]}>
+              <Text style={[styles.buttonText, { color: AppColors.text }]}>Delete</Text>
+            </TouchableOpacity>
           </View>
         )}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
-    </>
+    </View>
   );
+
 }
 
 const styles = StyleSheet.create({
+    stopButton: {
+    backgroundColor: AppColors.danger,
+  },
+    button: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    color: AppColors.text,
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  // Main Container
   container: {
     flex: 1,
-    padding: 10,
+    backgroundColor: AppColors.background,
   },
-  item: {
-    padding: 15,
+  // Summary Header
+  summaryContainer: {
+    padding: 16,
+    backgroundColor: AppColors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: '#333',
   },
-  tag: {
-    fontWeight: "bold",
+  summaryTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    color: AppColors.text,
+  },
+  summaryItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 4,
+  },
+  summaryCategory: {
+    fontWeight: '500',
+    color: AppColors.text,
+  },
+  summaryDuration: {
+    color: AppColors.textSecondary,
+  },
+  // List Item Card
+  itemContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  itemDetails: {
+    flex: 1,
+  },
+  itemCategory: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: AppColors.text,
+  },
+  itemDescription: {
+    color: AppColors.textSecondary,
+    marginTop: 2,
+  },
+  itemDuration: {
+    marginTop: 4,
+    color: AppColors.gold,
+  },
+  // Separator between list items
+  separator: {
+    height: 8,
+    backgroundColor: AppColors.background,
   },
 });

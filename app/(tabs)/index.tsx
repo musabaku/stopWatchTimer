@@ -36,11 +36,17 @@ export default function HomeScreen() {
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
         {isRunning ? (
-          <TouchableOpacity onPress={stopTimer} style={styles.button}>
+          <TouchableOpacity
+            onPress={stopTimer}
+            style={[styles.button, styles.stopButton]}
+          >
             <Text style={styles.buttonText}>Stop</Text>
           </TouchableOpacity>
         ) : (
-          <TouchableOpacity onPress={startTimer} style={styles.button}>
+          <TouchableOpacity
+            onPress={startTimer}
+            style={[styles.button, styles.startButton]}
+          >
             <Text style={styles.buttonText}>Start</Text>
           </TouchableOpacity>
         )}
@@ -63,13 +69,13 @@ export default function HomeScreen() {
                     styles.categoryButton,
                     {
                       backgroundColor:
-                        selectedCategory === cat ? "#007AFF" : "#EFEFF4",
+                        selectedCategory === cat ? AppColors.gold : "#EFEFF4",
                     },
                   ]}
                 >
                   <Text
                     style={{
-                      color: selectedCategory === cat ? "white" : "black",
+                      color: selectedCategory === cat ? AppColors.success : "black",
                       fontWeight: "bold",
                     }}
                   >
@@ -79,73 +85,128 @@ export default function HomeScreen() {
               ))}
             </View>
 
-            <TextInput onChangeText={setDescription} value={description}   style={styles.input}
-/>
+            <TextInput
+              onChangeText={setDescription}
+              value={description}
+              style={styles.input}
+            />
 
             <View style={styles.modalButtonContainer}>
               <TouchableOpacity
-                style={[styles.button, styles.cancelButton]}
                 onPress={cancelStart}
+                style={[styles.button, styles.resetButton]}
               >
                 <Text style={[styles.buttonText, { color: AppColors.text }]}>
                   Cancel
                 </Text>
               </TouchableOpacity>
+
               <TouchableOpacity
                 style={[styles.button, styles.startButton]}
                 onPress={confirmTagAndStart}
               >
-                <Text style={styles.buttonText}>Confirm & Start</Text>
+                <Text
+                  style={[styles.buttonText, { color: AppColors.background }]}
+                >
+                  Confirm
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </Modal>
-      <TouchableOpacity onPress={resetTimer} style={styles.button}>
-        <Text style={styles.buttonText}>Reset</Text>
+      <TouchableOpacity
+        onPress={resetTimer}
+        style={[styles.button, styles.resetButton]}
+      >
+        <Text style={[styles.buttonText, { color: AppColors.text }]}>
+          Reset
+        </Text>
       </TouchableOpacity>
       <Text style={styles.timerText}>{formatted}</Text>
-   <View style={styles.debugContainer}>
-  <Text style={styles.debugLabel}>Selected Category:</Text>
-  <Text style={styles.debugValue}>{selectedCategory || "None"}</Text>
+      <View style={styles.debugContainer}>
+        <Text style={styles.debugLabel}>Selected Category:</Text>
+        <Text style={styles.debugValue}>{selectedCategory || "None"}</Text>
 
-  <Text style={styles.debugLabel}>Description:</Text>
-  <Text style={styles.debugValue}>{description || "None"}</Text>
-</View>
-
+        <Text style={styles.debugLabel}>Description:</Text>
+        <Text style={styles.debugValue}>{description || "None"}</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  debugContainer: {
+    marginTop: 30,
+    padding: 15,
+    backgroundColor: AppColors.gold ,
+    borderRadius: 10,
+    width: "90%",
+  },
+  debugLabel: {
+    fontWeight: "600",
+    fontSize: 16,
+    marginTop: 5,
+    color: AppColors.surface,
+  },
+  debugValue: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: "#000",
+  },
+  // Main Layout
   container: {
     flex: 1,
-    justifyContent: "center", // Vertically center items
-    alignItems: "center", // Horizontally center items
+    justifyContent: "space-between",
+    alignItems: "center",
     backgroundColor: AppColors.background,
+    paddingVertical: 80,
+    paddingHorizontal: 20,
   },
-  categoriesContainer: {
-    flexDirection: "row", // Arrange items horizontally
-    flexWrap: "wrap", // Allow items to wrap
-    justifyContent: "center", // Center the items
-    marginBottom: 16,
-    padding:10
+
+  // Current Session Display
+  currentSessionContainer: {
+    alignItems: "center",
+    minHeight: 60, // Reserve space even when empty
+  },
+  currentCategory: {
+    color: AppColors.gold,
+    fontSize: 24,
+    fontWeight: "600",
+  },
+  currentDescription: {
+    color: AppColors.textSecondary,
+    fontSize: 16,
+    marginTop: 4,
+  },
+
+  // Timer Display
+  timerContainer: {
+    borderWidth: 2,
+    borderColor: AppColors.surface,
+    width: 280,
+    height: 280,
+    borderRadius: 140, // Makes it a circle
+    justifyContent: "center",
+    alignItems: "center",
   },
   timerText: {
-    fontSize: 72,
-    fontWeight: "200", // A thinner, modern font weight
+    fontSize: 64,
+    fontWeight: "200",
     color: AppColors.text,
-    marginBottom: 40,
   },
+
+  // Buttons
   buttonContainer: {
     flexDirection: "row",
     gap: 20,
   },
   button: {
-    backgroundColor: AppColors.primary,
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
     color: AppColors.text,
@@ -154,88 +215,66 @@ const styles = StyleSheet.create({
   },
   startButton: {
     backgroundColor: AppColors.primary,
-
   },
   stopButton: {
-    backgroundColor: AppColors.primary,
-
+    backgroundColor: AppColors.success,
   },
   resetButton: {
-    backgroundColor: AppColors.primary,
-
+    backgroundColor: AppColors.danger,
   },
-  resetButtonText: {
-    color: AppColors.text,
 
-  },
+  // Modal Styles
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   modalContent: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 10,
+    backgroundColor: AppColors.surface,
+    padding: 22,
+    borderRadius: 14,
     width: "90%",
-    alignItems: "center",
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: 20,
     textAlign: "center",
+    color: AppColors.text,
+  },
+  categoriesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
   },
   categoryButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
     paddingVertical: 8,
-    paddingHorizontal: 16,
-    marginRight: 8,
+    paddingHorizontal: 12,
+    margin: 4,
     borderRadius: 20,
   },
-input: {
-  height: 44,
-  width: "100%",
-  borderColor: "#ccc",
-  borderWidth: 1,
-  borderRadius: 8,
-  paddingHorizontal: 12,
-  fontSize: 16,
-  color: "#000",
-  backgroundColor: "#F9F9F9",
-  marginBottom: 20,
-},
-
+  categoryButtonText: {
+    fontWeight: "500",
+  },
+  input: {
+    height: 44,
+    backgroundColor: AppColors.background,
+    borderColor: AppColors.textSecondary,
+    color: AppColors.text,
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginTop: 20,
+    marginBottom: 20,
+    width: "100%",
+  },
   modalButtonContainer: {
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "space-between",
-    padding:10,
-    width:'100%',
-    marginTop:20,
+    gap: 10,
   },
-  cancelButton: {
-    backgroundColor: AppColors.primary,
-
-    padding:10
-    
-  },
-  debugContainer: {
-  marginTop: 30,
-  padding: 15,
-  backgroundColor: "#F4F4F6",
-  borderRadius: 10,
-  width: "90%",
-},
-debugLabel: {
-  fontWeight: "600",
-  fontSize: 16,
-  marginTop: 5,
-  color: "#555",
-},
-debugValue: {
-  fontSize: 16,
-  marginBottom: 10,
-  color: "#000",
-},
-
 });
