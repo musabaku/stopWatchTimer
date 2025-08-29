@@ -11,6 +11,8 @@ import { useContext } from "react";
 import { Button } from "react-native";
 import { TimerContext } from "@/context/TimerContext";
 import formatTime from "@/utils/formatTime";
+
+import { AppColors } from "@/constants/Colors";
 export default function HomeScreen() {
   const {
     seconds,
@@ -71,21 +73,21 @@ export default function HomeScreen() {
                       fontWeight: "bold",
                     }}
                   >
-                    console.log({cat})
                     {cat}
                   </Text>
                 </TouchableOpacity>
               ))}
             </View>
 
-            <TextInput onChangeText={setDescription} value={description} />
+            <TextInput onChangeText={setDescription} value={description}   style={styles.input}
+/>
 
             <View style={styles.modalButtonContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.cancelButton]}
                 onPress={cancelStart}
               >
-                <Text style={[styles.buttonText, { color: "#007AFF" }]}>
+                <Text style={[styles.buttonText, { color: AppColors.text }]}>
                   Cancel
                 </Text>
               </TouchableOpacity>
@@ -103,10 +105,14 @@ export default function HomeScreen() {
         <Text style={styles.buttonText}>Reset</Text>
       </TouchableOpacity>
       <Text style={styles.timerText}>{formatted}</Text>
-      <Text>selectedCategory</Text>
-      <Text>{selectedCategory}</Text>
-      <Text>description</Text>
-      <Text>{description}</Text>
+   <View style={styles.debugContainer}>
+  <Text style={styles.debugLabel}>Selected Category:</Text>
+  <Text style={styles.debugValue}>{selectedCategory || "None"}</Text>
+
+  <Text style={styles.debugLabel}>Description:</Text>
+  <Text style={styles.debugValue}>{description || "None"}</Text>
+</View>
+
     </View>
   );
 }
@@ -116,7 +122,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center", // Vertically center items
     alignItems: "center", // Horizontally center items
-    backgroundColor: "#fff",
+    backgroundColor: AppColors.background,
   },
   categoriesContainer: {
     flexDirection: "row", // Arrange items horizontally
@@ -128,6 +134,7 @@ const styles = StyleSheet.create({
   timerText: {
     fontSize: 72,
     fontWeight: "200", // A thinner, modern font weight
+    color: AppColors.text,
     marginBottom: 40,
   },
   buttonContainer: {
@@ -135,27 +142,31 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   button: {
-    backgroundColor: "#007AFF",
+    backgroundColor: AppColors.primary,
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 25,
   },
   buttonText: {
-    color: "white",
+    color: AppColors.text,
     fontSize: 18,
     fontWeight: "600",
   },
   startButton: {
-    backgroundColor: "#34C759",
+    backgroundColor: AppColors.primary,
+
   },
   stopButton: {
-    backgroundColor: "#FF3B30",
+    backgroundColor: AppColors.primary,
+
   },
   resetButton: {
-    backgroundColor: "#EFEFF4",
+    backgroundColor: AppColors.primary,
+
   },
   resetButtonText: {
-    color: "#333",
+    color: AppColors.text,
+
   },
   modalContainer: {
     flex: 1,
@@ -182,23 +193,49 @@ const styles = StyleSheet.create({
     marginRight: 8,
     borderRadius: 20,
   },
-  input: {
-    height: 44,
-    borderColor: "#EFEFF4",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginTop: 20,
-    marginBottom: 20,
-  },
+input: {
+  height: 44,
+  width: "100%",
+  borderColor: "#ccc",
+  borderWidth: 1,
+  borderRadius: 8,
+  paddingHorizontal: 12,
+  fontSize: 16,
+  color: "#000",
+  backgroundColor: "#F9F9F9",
+  marginBottom: 20,
+},
+
   modalButtonContainer: {
     flexDirection: "column",
     justifyContent: "space-between",
-    padding:10
+    padding:10,
+    width:'100%',
+    marginTop:20,
   },
   cancelButton: {
-    backgroundColor: "#EFEFF4",
+    backgroundColor: AppColors.primary,
+
     padding:10
     
   },
+  debugContainer: {
+  marginTop: 30,
+  padding: 15,
+  backgroundColor: "#F4F4F6",
+  borderRadius: 10,
+  width: "90%",
+},
+debugLabel: {
+  fontWeight: "600",
+  fontSize: 16,
+  marginTop: 5,
+  color: "#555",
+},
+debugValue: {
+  fontSize: 16,
+  marginBottom: 10,
+  color: "#000",
+},
+
 });
