@@ -11,7 +11,7 @@ import { useContext } from "react";
 import { Button } from "react-native";
 import { TimerContext } from "@/context/TimerContext";
 import {formatTime} from "@/utils/formatTime";
-
+import { MaterialIcons } from '@expo/vector-icons'; 
 import { AppColors } from "@/constants/Colors";
 export default function HomeScreen() {
   const {
@@ -63,16 +63,23 @@ export default function HomeScreen() {
             <View style={styles.categoriesContainer}>
               {categories.map((cat, index) => (
                 <TouchableOpacity
-                  key={index}
+                  key={cat.name}
                   onPress={() => setSelectedCategory(cat)}
                   style={[
                     styles.categoryButton,
                     {
                       backgroundColor:
-                        selectedCategory === cat ? AppColors.gold : "#EFEFF4",
+                        AppColors.gold,
                     },
                   ]}
                 >
+                  
+             
+                  <MaterialIcons 
+                    name={cat.icon as any} 
+                    size={16} 
+                    color={selectedCategory === cat ? AppColors.success : "black"} 
+                  />
                   <Text
                     style={{
                       color: selectedCategory === cat ? AppColors.success : "black",
@@ -81,6 +88,7 @@ export default function HomeScreen() {
                   >
                     {cat.name}
                   </Text>
+              
                 </TouchableOpacity>
               ))}
             </View>
@@ -126,7 +134,7 @@ export default function HomeScreen() {
       <Text style={styles.timerText}>{formatted}</Text>
       <View style={styles.debugContainer}>
         <Text style={styles.debugLabel}>Selected Category:</Text>
-        <Text style={styles.debugValue}>{selectedCategory.name || "None"}</Text>
+        <Text style={styles.debugValue}>{selectedCategory?.name || "None"}</Text>
 
         <Text style={styles.debugLabel}>Description:</Text>
         <Text style={styles.debugValue}>{description || "None"}</Text>

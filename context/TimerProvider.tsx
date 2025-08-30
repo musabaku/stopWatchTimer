@@ -18,17 +18,18 @@ const TimerProvider = ({children}) =>{
 //   "🌀 Insanity"
 // ];
  const CATEGORIES = [
-  { name: 'Protected', icon: 'security' },
-  { name: 'At Risk', icon: 'warning' },
-  { name: 'Support', icon: 'build' },
-  { name: 'Fixed', icon: 'schedule' },
+  { name: 'Deep Work', icon: 'security' },
+  { name: 'Volatile', icon: 'warning' },
+  { name: 'Maintenance', icon: 'build' },
+  { name: 'Scheduled', icon: 'schedule' },
   { name: 'Out', icon: 'directions-run' },
   { name: 'Rest', icon: 'hotel' },
-  { name: 'Curiosity', icon: 'search' },
+  { name: 'Inquiry', icon: 'search' },
   { name: 'Pleasure', icon: 'sentiment-very-satisfied' },
-  { name: 'Emotional', icon: 'self-improvement' },
-  { name: 'Undefined', icon: 'help-outline' },
+  { name: 'Sanity', icon: 'self-improvement' },
+  { name: 'Insanity', icon: 'help-outline' },
 ];
+
 
 
 
@@ -64,7 +65,7 @@ function handleSessionEdit(newCategory:string,newDescription:string){
         setdescriptionActive(false)
     }
     function confirmTagAndStart(){
-        if(selectedCategory.name.trim()!==''){
+        if(selectedCategory &&selectedCategory.name.trim()!==''){
          setisRunning(true)
          setdescriptionActive(false)
         }
@@ -73,8 +74,10 @@ function handleSessionEdit(newCategory:string,newDescription:string){
         }
     }
     function stopTimer(){
+           if (selectedCategory) {
+      addSession(selectedCategory.name, description, seconds);
+    }
         setisRunning(false)
-        addSession(selectedCategory.name,description,seconds)
         setDescription('')
         setSelectedCategory(null)
         setSeconds(0)
