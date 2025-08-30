@@ -1,8 +1,9 @@
 // components/EditSessionModal.tsx
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Modal, TouchableOpacity, ScrollView } from 'react-native';
 import { AppColors } from '@/constants/Colors';
 import { Session } from '@/context/TimerContext'; // Reuse the Session type
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface EditSessionModalProps {
   visible: boolean;
@@ -19,6 +20,8 @@ export default function EditSessionModal({
   session,
   categories,
 }: EditSessionModalProps) {
+    console.log({categories})
+    console.log({session})
   const [editedCategory, setEditedCategory] = useState(session?.selectedCategory || '');
   const [editedDescription, setEditedDescription] = useState(session?.description || '');
 
@@ -33,23 +36,41 @@ export default function EditSessionModal({
       animationType="fade"
       onRequestClose={onClose}
     >
-      <View style={styles.modalContainer}>
+     <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Edit Session</Text>
-          {/* Category selection UI would go here, similar to your HomeScreen */}
           
+          <View style={styles.categoriesContainer}>
+            {categories.map((cat) => (
+              <TouchableOpacity
+                key={cat.name} // Use the unique category name for the key
+                onPress={() => setEditedCategory(cat.name)}
+                style={[
+                  styles.categoryButton,
+                  { backgroundColor: editedCategory === cat.name ? AppColors.primary : AppColors.background }
+                ]}
+              >
+                <MaterialIcons name={cat.icon as any} size={16} color={editedCategory === cat.name ? AppColors.background : AppColors.text} />
+                <Text style={[ styles.categoryButtonText, { color: editedCategory === cat.name ? AppColors.background : AppColors.text } ]}>
+                  {cat.name}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
           <TextInput
             style={styles.input}
             value={editedDescription}
             onChangeText={setEditedDescription}
             placeholder="Description"
+            placeholderTextColor={AppColors.textSecondary}
           />
           <View style={styles.modalButtonContainer}>
             <TouchableOpacity style={[styles.button, styles.resetButton]} onPress={onClose}>
               <Text style={[styles.buttonText, { color: AppColors.textSecondary }]}>Cancel</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.button, styles.startButton]} onPress={handleSave}>
-              <Text style={[styles.buttonText, { color: AppColors.background }]}>Save</Text>
+              <Text style={[styles.buttonText, { color: AppColors.background }]}>Save Changes</Text>
             </TouchableOpacity>
           </View>
         </View>

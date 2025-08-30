@@ -11,7 +11,7 @@ import EditSessionModal from '@/components/EditSessionModal';
 export default function History() {
   const [sessions, setSessions] = useState([]);
   const [filter, setFilter] = useState<'day' | 'week' | 'month' | 'all'>('all');
-  const {openEditModal,sessionToEdit,isEditModalVisible,categories,closeEditModal} = useContext(TimerContext)
+  const {openEditModal,sessionToEdit,isEditModalVisible,categories,closeEditModal,handleSessionEdit} = useContext(TimerContext)
   // Fetches data whenever the screen is focused or the filter changes
   useFocusEffect(
     useCallback(() => {
@@ -55,10 +55,6 @@ export default function History() {
     setSessions((currentSessions) =>
       currentSessions.filter((session) => session.id !== id)
     );
-  };
-  const handleEdit = (session: Session) => {
-    openEditModal(session)
-    
   };
 
   return (
@@ -134,8 +130,8 @@ export default function History() {
               <TouchableOpacity onPress={() => handleDelete(item.id)}>
                 <MaterialIcons name="delete" size={24} color={AppColors.danger} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleEdit(item)}>
-                <MaterialIcons name="update" size={24} color={AppColors.danger} />
+              <TouchableOpacity onPress={() => openEditModal(item)}>
+                <MaterialIcons name="edit" size={24} color={AppColors.textSecondary} />
               </TouchableOpacity>
             </View>
           );
@@ -147,7 +143,7 @@ export default function History() {
         visible={isEditModalVisible}
         onClose={closeEditModal}
         session={sessionToEdit}
-        onSave={handleEdit}
+        onSave={handleSessionEdit}
         categories={categories} // You'll need access to the categories list
       />
     )}

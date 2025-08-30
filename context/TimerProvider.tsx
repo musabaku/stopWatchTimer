@@ -36,10 +36,10 @@ function closeEditModal(){
     setSessionToEdit(null)
     setIsEditModalVisible(false)
 } 
-function handleSessionEdit(session:Session,newCategory:string,newDescription:string){
+function handleSessionEdit(newCategory:string,newDescription:string){
     if(sessionToEdit){
         updateSession(sessionToEdit.id,newCategory,newDescription)
-        closeModal()
+        closeEditModal()
     }
     setSessionToEdit(null)
     setIsEditModalVisible(false)
@@ -104,7 +104,8 @@ function handleSessionEdit(session:Session,newCategory:string,newDescription:str
         isEditModalVisible,
         openEditModal,
         sessionToEdit,
-        closeEditModal
+        closeEditModal,
+        handleSessionEdit
     }
     return(
         <TimerContext.Provider value={obj}>

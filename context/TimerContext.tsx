@@ -16,9 +16,11 @@ type TimerContextType ={
     descriptionActive: boolean;
     isEditModalVisible: boolean;
     sessionToEdit: Session|null;
-    openEditModal:(session:Session)=>void
-    closeEditModal:()=>void
-    setIsEditModalVisible:Dispatch<SetStateAction<boolean>>
+    openEditModal:(session:Session)=>void;
+    closeEditModal:()=>void;
+    setIsEditModalVisible:Dispatch<SetStateAction<boolean>>;
+    handleSessionEdit:(selectedCategory:string,description:string)=>void;
+
 }
 export type Session = {
   id: number;
@@ -51,6 +53,7 @@ const defaultValue = {
     setIsEditModalVisible:()=>{},
     sessionToEdit: null,
     openEditModal:()=>{},
-    closeEditModal:()=>{}
+    closeEditModal:()=>{},
+    handleSessionEdit:()=>{}
 }
 export const TimerContext = createContext<TimerContextType>(defaultValue)
