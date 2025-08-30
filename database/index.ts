@@ -56,5 +56,11 @@ export const getAllSessions = (filter:'day'|'week'|'month'|'all'='all'): any[] =
 
 export const deleteSession = (id:number)=>{
 const db = getDbConnection();
-db.runSync('DELETE FROM sessions WHERE id = ?',[id])
+db.runSync('DELETE FROM sessions WHERE id = ?',[id]) 
+}
+
+export const updateSession = (id:number,selectedCategory:string,description:string)=>{
+const db = getDbConnection();
+
+db.runSync('UPDATE sessions SET selectedCategory = ?, description = ? WHERE id = ?',[selectedCategory,description,id]) 
 }

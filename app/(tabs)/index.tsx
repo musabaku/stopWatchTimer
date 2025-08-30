@@ -10,7 +10,7 @@ import {
 import { useContext } from "react";
 import { Button } from "react-native";
 import { TimerContext } from "@/context/TimerContext";
-import formatTime from "@/utils/formatTime";
+import {formatTime} from "@/utils/formatTime";
 
 import { AppColors } from "@/constants/Colors";
 export default function HomeScreen() {

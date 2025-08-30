@@ -15,6 +15,13 @@ type TimerContextType ={
     cancelStart:()=>void;
     descriptionActive: boolean;
 }
+export type Session = {
+  id: number;
+  selectedCategory: string;
+  description?: string;
+  duration: number; // in seconds
+  end_time: string;
+};
 type TimeObject = {
     hour:number;
     minute:number;

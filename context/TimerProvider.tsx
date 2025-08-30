@@ -26,6 +26,7 @@ const category1 = [
     const [selectedCategory,setSelectedCategory] = useState("");
     const [description,setDescription] = useState("");
     const [descriptionActive,setdescriptionActive] = useState(false);
+    const [canEdit,setCanEdit] = useState(false);
 
     function startTimer(){
         setdescriptionActive(true)
