@@ -6,15 +6,16 @@ import { FlatList, View, Text, StyleSheet, TouchableOpacity ,Button} from "react
 import { AppColors } from "@/constants/Colors";
 export default function History() {
   const [session, setSession] = useState([]);
+  const [filter, setFitler] = useState<'day' | 'week' | 'month' | 'all'>('day');
 
   useFocusEffect(
     useCallback(() => {
       async function loadData() {
-        const data = await getAllSessions();
+        const data = await getAllSessions(filter);
         setSession(data);
       }
       loadData();
-    }, [])
+    }, [filter])
   );
   // console.log({session})
 
@@ -44,6 +45,19 @@ return (
         ListHeaderComponent={
           <View style={styles.summaryContainer}>
             <Text style={styles.summaryTitle}>Summary by Category</Text>
+              <TouchableOpacity onPress={() => setFitler('all')} style={[styles.button, styles.startButton]}>
+              <Text style={[styles.buttonText, { color: AppColors.text }]}>All</Text>
+            </TouchableOpacity>
+              <TouchableOpacity onPress={() => setFitler('month')} style={[styles.button, styles.successButton]}>
+              <Text style={[styles.buttonText, { color: AppColors.text }]}>Monthly</Text>
+            </TouchableOpacity>
+              <TouchableOpacity onPress={() => setFitler('week')} style={[styles.button, styles.startButton]}>
+              <Text style={[styles.buttonText, { color: AppColors.text }]}>Weekly</Text>
+            </TouchableOpacity>
+              <TouchableOpacity onPress={() => setFitler('day')} style={[styles.button, styles.successButton]}>
+              <Text style={[styles.buttonText, { color: AppColors.text }]}>Daily</Text>
+            </TouchableOpacity>
+            
             {Object.entries(summary).map(([category, duration]) => (
               <View key={category} style={styles.summaryItem}>
                 <Text style={styles.summaryCategory}>{category}:</Text>
@@ -78,6 +92,12 @@ return (
 const styles = StyleSheet.create({
     stopButton: {
     backgroundColor: AppColors.danger,
+  },
+    startButton: {
+    backgroundColor: AppColors.primary,
+  },
+    successButton: {
+    backgroundColor: AppColors.success,
   },
     button: {
     paddingVertical: 10,

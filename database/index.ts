@@ -37,10 +37,22 @@ export const addSession = (selectedCategory: string,description: string, duratio
 };
 
 // Fetching data uses the on-demand connection
-export const getAllSessions = (): any[] => {
+export const getAllSessions = (filter:'day'|'week'|'month'|'all'='all'): any[] => {
   const db = getDbConnection();
-  return db.getAllSync('SELECT * FROM sessions ORDER BY end_time DESC');
+  let query = 'SELECT * FROM sessions'
+  if(filter==='day'){
+    query+=" WHERE date(end_time)=date('now','localtime')"
+  }
+  if(filter==='week'){
+    query+=" WHERE date(end_time)>=date('now','-6 days','localtime')"
+  }
+  if(filter==='month'){
+    query+=" WHERE date(end_time)>=date('now','-29 days','localtime')"
+  }
+  query+=' ORDER BY end_time DESC'
+  return db.getAllSync(query);
 };
+
 
 export const deleteSession = (id:number)=>{
 const db = getDbConnection();
