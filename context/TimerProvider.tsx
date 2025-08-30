@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {TimerContext} from "./TimerContext"
 import { addSession, updateSession } from "@/database";
-import { Session } from "./TimerContext";
+import { Session,Category } from "./TimerContext";
+
 const TimerProvider = ({children}) =>{
 
 // const category1 = [
@@ -16,7 +17,7 @@ const TimerProvider = ({children}) =>{
 //   "🌊 Sanity",
 //   "🌀 Insanity"
 // ];
-export const CATEGORIES = [
+ const CATEGORIES = [
   { name: 'Protected', icon: 'security' },
   { name: 'At Risk', icon: 'warning' },
   { name: 'Support', icon: 'build' },
@@ -34,7 +35,7 @@ export const CATEGORIES = [
     const [seconds,setSeconds] = useState(0);
     const [isRunning,setisRunning] = useState(false);
     const [categories,setCategory] = useState(CATEGORIES);
-    const [selectedCategory,setSelectedCategory] = useState("");
+    const [selectedCategory,setSelectedCategory] = useState<Category|null>(null);
     const [description,setDescription] = useState("");
     const [descriptionActive,setdescriptionActive] = useState(false);
    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -63,7 +64,7 @@ function handleSessionEdit(newCategory:string,newDescription:string){
         setdescriptionActive(false)
     }
     function confirmTagAndStart(){
-        if(selectedCategory.trim()!==''){
+        if(selectedCategory.name.trim()!==''){
          setisRunning(true)
          setdescriptionActive(false)
         }
@@ -73,15 +74,15 @@ function handleSessionEdit(newCategory:string,newDescription:string){
     }
     function stopTimer(){
         setisRunning(false)
-        addSession(selectedCategory,description,seconds)
+        addSession(selectedCategory.name,description,seconds)
         setDescription('')
-        setSelectedCategory('')
+        setSelectedCategory(null)
         setSeconds(0)
     }
     function resetTimer(){
         setisRunning(false)
         setDescription('')
-        setSelectedCategory('')
+        setSelectedCategory(null)
         setSeconds(0)
     }
     function timer(){

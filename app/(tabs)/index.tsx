@@ -79,7 +79,7 @@ export default function HomeScreen() {
                       fontWeight: "bold",
                     }}
                   >
-                    {cat}
+                    {cat.name}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -126,7 +126,7 @@ export default function HomeScreen() {
       <Text style={styles.timerText}>{formatted}</Text>
       <View style={styles.debugContainer}>
         <Text style={styles.debugLabel}>Selected Category:</Text>
-        <Text style={styles.debugValue}>{selectedCategory || "None"}</Text>
+        <Text style={styles.debugValue}>{selectedCategory.name || "None"}</Text>
 
         <Text style={styles.debugLabel}>Description:</Text>
         <Text style={styles.debugValue}>{description || "None"}</Text>

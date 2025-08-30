@@ -1,4 +1,10 @@
 import { createContext, Dispatch, SetStateAction  } from "react";
+export type Category = {
+  name: string;
+  icon: string;
+};
+
+
 type TimerContextType ={
     seconds: number;
     isRunning: boolean;
@@ -6,9 +12,9 @@ type TimerContextType ={
     stopTimer : ()=>void;
     resetTimer : ()=>void;
     // formatTime : (sec:number)=>TimeObject;
-    categories: string[];
-    selectedCategory: string;
-    setSelectedCategory:Dispatch<SetStateAction<string>>;
+    categories: Category[];
+    selectedCategory: Category|null;
+    setSelectedCategory:Dispatch<SetStateAction<Category | null>>;
     description : string;
     setDescription:Dispatch<SetStateAction<string>>;
     confirmTagAndStart:()=>void;
@@ -41,7 +47,7 @@ const defaultValue = {
     stopTimer:()=>{},
     resetTimer:()=>{},
     // formatTime:()=>({hour:0,minute:0,second:0}),
-    selectedCategory:"",
+    selectedCategory:null,
     setSelectedCategory:()=>{},
     categories:[],
     description:"",
