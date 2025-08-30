@@ -126,13 +126,15 @@ export default function History() {
           {formatTime12Hour(startTime)} - {formatTime12Hour(endTime)}
         </Text>
               </View>
+<View style={styles.actionButtons}> 
+  <TouchableOpacity onPress={() => openEditModal(item)}>
+    <MaterialIcons name="edit" size={24} color={AppColors.textSecondary} />
+  </TouchableOpacity>
+  <TouchableOpacity onPress={() => handleDelete(item.id)}>
+    <MaterialIcons name="delete" size={24} color={AppColors.danger} />
+  </TouchableOpacity>
+</View>
 
-              <TouchableOpacity onPress={() => handleDelete(item.id)}>
-                <MaterialIcons name="delete" size={24} color={AppColors.danger} />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => openEditModal(item)}>
-                <MaterialIcons name="edit" size={24} color={AppColors.textSecondary} />
-              </TouchableOpacity>
             </View>
           );
         }}
@@ -152,6 +154,11 @@ export default function History() {
 }
 
 const styles = StyleSheet.create({
+  actionButtons: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: 20, // This adds space between the icons
+},
 sectionHeader: {
   backgroundColor: AppColors.background,
   padding: 12,

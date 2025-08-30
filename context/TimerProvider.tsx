@@ -4,25 +4,36 @@ import { addSession, updateSession } from "@/database";
 import { Session } from "./TimerContext";
 const TimerProvider = ({children}) =>{
 
-const category1 = [
-  "🛡️ Protected",
-  "⚠️ At Risk",
-  "🛠️ Support",
-  "📌 Fixed",
-  "🚪 Out",
-  "😴 Rest",
-  "🔍 Curiosity",
-  "🎉 Pleasure",
-  "🌊 Sanity",
-  "🌀 Insanity"
+// const category1 = [
+//   "🛡️ Protected",
+//   "⚠️ At Risk",
+//   "🛠️ Support",
+//   "📌 Fixed",
+//   "🚪 Out",
+//   "😴 Rest",
+//   "🔍 Curiosity",
+//   "🎉 Pleasure",
+//   "🌊 Sanity",
+//   "🌀 Insanity"
+// ];
+export const CATEGORIES = [
+  { name: 'Protected', icon: 'security' },
+  { name: 'At Risk', icon: 'warning' },
+  { name: 'Support', icon: 'build' },
+  { name: 'Fixed', icon: 'schedule' },
+  { name: 'Out', icon: 'directions-run' },
+  { name: 'Rest', icon: 'hotel' },
+  { name: 'Curiosity', icon: 'search' },
+  { name: 'Pleasure', icon: 'sentiment-very-satisfied' },
+  { name: 'Emotional', icon: 'self-improvement' },
+  { name: 'Undefined', icon: 'help-outline' },
 ];
-
 
 
 
     const [seconds,setSeconds] = useState(0);
     const [isRunning,setisRunning] = useState(false);
-    const [categories,setCategory] = useState(category1);
+    const [categories,setCategory] = useState(CATEGORIES);
     const [selectedCategory,setSelectedCategory] = useState("");
     const [description,setDescription] = useState("");
     const [descriptionActive,setdescriptionActive] = useState(false);
