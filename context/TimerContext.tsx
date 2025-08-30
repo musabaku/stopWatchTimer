@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, Dispatch, SetStateAction  } from "react";
 type TimerContextType ={
     seconds: number;
     isRunning: boolean;
@@ -8,12 +8,17 @@ type TimerContextType ={
     // formatTime : (sec:number)=>TimeObject;
     categories: string[];
     selectedCategory: string;
-    setSelectedCategory:(cat:string)=>void;
+    setSelectedCategory:Dispatch<SetStateAction<string>>;
     description : string;
-    setDescription:(desc:string)=>void;
+    setDescription:Dispatch<SetStateAction<string>>;
     confirmTagAndStart:()=>void;
     cancelStart:()=>void;
     descriptionActive: boolean;
+    isEditModalVisible: boolean;
+    sessionToEdit: Session|null;
+    openEditModal:(session:Session)=>void
+    closeEditModal:()=>void
+    setIsEditModalVisible:Dispatch<SetStateAction<boolean>>
 }
 export type Session = {
   id: number;
@@ -41,6 +46,11 @@ const defaultValue = {
     setDescription:()=>{},
     confirmTagAndStart:()=>{},
     cancelStart:()=>{},
-    descriptionActive:false
+    descriptionActive:false,
+    isEditModalVisible:false,
+    setIsEditModalVisible:()=>{},
+    sessionToEdit: null,
+    openEditModal:()=>{},
+    closeEditModal:()=>{}
 }
 export const TimerContext = createContext<TimerContextType>(defaultValue)

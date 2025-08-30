@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {TimerContext} from "./TimerContext"
-import { addSession } from "@/database";
-
+import { addSession, updateSession } from "@/database";
+import { Session } from "./TimerContext";
 const TimerProvider = ({children}) =>{
 
 const category1 = [
@@ -26,7 +26,24 @@ const category1 = [
     const [selectedCategory,setSelectedCategory] = useState("");
     const [description,setDescription] = useState("");
     const [descriptionActive,setdescriptionActive] = useState(false);
-    const [canEdit,setCanEdit] = useState(false);
+   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+const [sessionToEdit, setSessionToEdit] = useState<Session | null>(null);
+function openEditModal(session:Session){
+    setSessionToEdit(session)
+    setIsEditModalVisible(true)
+} 
+function closeEditModal(){
+    setSessionToEdit(null)
+    setIsEditModalVisible(false)
+} 
+function handleSessionEdit(session:Session,newCategory:string,newDescription:string){
+    if(sessionToEdit){
+        updateSession(sessionToEdit.id,newCategory,newDescription)
+        closeModal()
+    }
+    setSessionToEdit(null)
+    setIsEditModalVisible(false)
+} 
 
     function startTimer(){
         setdescriptionActive(true)
@@ -82,7 +99,12 @@ const category1 = [
         setDescription,
         confirmTagAndStart,
         descriptionActive,
-        cancelStart
+        cancelStart,
+        setIsEditModalVisible,
+        isEditModalVisible,
+        openEditModal,
+        sessionToEdit,
+        closeEditModal
     }
     return(
         <TimerContext.Provider value={obj}>

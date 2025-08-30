@@ -1,16 +1,17 @@
 import { deleteSession, getAllSessions,updateSession } from '@/database';
-import { Session } from '@/context/TimerContext';
+import { Session, TimerContext } from '@/context/TimerContext';
 import  {formatDateWithDay,formatTime12Hour,formatTime}  from '@/utils/formatTime';
 import { useFocusEffect } from 'expo-router';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { FlatList, View, Text, StyleSheet, TouchableOpacity, SectionList } from 'react-native';
 import { AppColors } from '@/constants/Colors';
 import { MaterialIcons } from '@expo/vector-icons';
+import EditSessionModal from '@/components/EditSessionModal';
 
 export default function History() {
   const [sessions, setSessions] = useState([]);
   const [filter, setFilter] = useState<'day' | 'week' | 'month' | 'all'>('all');
-
+  const {openEditModal,sessionToEdit,isEditModalVisible,categories,closeEditModal} = useContext(TimerContext)
   // Fetches data whenever the screen is focused or the filter changes
   useFocusEffect(
     useCallback(() => {
@@ -55,9 +56,9 @@ export default function History() {
       currentSessions.filter((session) => session.id !== id)
     );
   };
-  const handleEdit = (id: number) => {
-    updateSession(id,selectedCategory,description);
-  
+  const handleEdit = (session: Session) => {
+    openEditModal(session)
+    
   };
 
   return (
@@ -133,7 +134,7 @@ export default function History() {
               <TouchableOpacity onPress={() => handleDelete(item.id)}>
                 <MaterialIcons name="delete" size={24} color={AppColors.danger} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handleEdit(item.id)}>
+              <TouchableOpacity onPress={() => handleEdit(item)}>
                 <MaterialIcons name="update" size={24} color={AppColors.danger} />
               </TouchableOpacity>
             </View>
@@ -141,6 +142,15 @@ export default function History() {
         }}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
+       {sessionToEdit && (
+      <EditSessionModal
+        visible={isEditModalVisible}
+        onClose={closeEditModal}
+        session={sessionToEdit}
+        onSave={handleEdit}
+        categories={categories} // You'll need access to the categories list
+      />
+    )}
     </View>
   );
 }
